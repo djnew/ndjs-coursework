@@ -1,0 +1,30 @@
+version: '3.3'
+services:
+  ndjs-coursework-app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: ndjs-coursework-app
+    entrypoint: ['yarn', 'watch']
+    env_file:
+      - .env
+    ports:
+      - "80:${PORT}"
+    volumes:
+      - ".:/var/www"
+    depends_on:
+      - ndjs-coursework-mongo
+  ndjs-coursework-mongo:
+    image: mongo:5.0.3
+    container_name: ndjs-coursework-mongo
+    restart: always
+    ports:
+      - "27017:27017"
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: ${MONGO_CONNECT_USERNAME:-root}
+      MONGO_INITDB_ROOT_PASSWORD: ${MONGO_CONNECT_PASSWORD:-password}
+    volumes:
+      - 'mongo_coursework_data:/data/db'
+
+volumes:
+  mongo_coursework_data:
