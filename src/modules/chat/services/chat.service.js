@@ -30,10 +30,12 @@ const ChatService = {
 
 
     if (chat) {
-      console.log('testMessage',[...chat.messages, new mongoose.mongo.ObjectId(message.id)]);
+      console.log('testMessage', [...chat.messages, new mongoose.mongo.ObjectId(message.id)]);
       await ChatModel.findByIdAndUpdate(chat.id.toString(), {messages: [...chat.messages, message.id]});
+      const newMessage = await MessageModel.findById(message.id).select('-__v -updatedAt -isDeleted')
+        .populate('author', 'name', 'User').exec();
       console.log(`chat exist ${chat.id}`);
-      return emitter.emit('sendToSubscribers', {chatId: chat.id.toString(), message});
+      return emitter.emit('sendToSubscribers', {chatId: chat.id.toString(), message: newMessage});
     } else {
       console.log('chat not exist', {
         users: [author, receiver],
@@ -43,7 +45,10 @@ const ChatService = {
         users: [author, receiver],
         messages: [message.id]
       });
-      return emitter.emit('sendToSubscribers', {chatId: chat.id, message});
+      const newMessage = await MessageModel.findById(message.id).select('-__v -updatedAt -isDeleted')
+        .populate('author', 'name', 'User').exec();
+
+      return emitter.emit('sendToSubscribers', {chatId: chat.id, message: newMessage});
     }
   },
   subscribe: async (fn) => {

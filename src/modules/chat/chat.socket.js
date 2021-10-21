@@ -11,6 +11,7 @@ module.exports = async (socket, io) => {
 
 
   await ChatService.subscribe(async ({chatId, message}) => {
+    console.log('newMessage',message);
     const chatUsers = await ChatService.getUsersByChatId(chatId);
     console.log('users:', chatUsers.users);
     chatUsers.users.forEach((user) => {

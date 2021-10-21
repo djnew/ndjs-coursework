@@ -90,23 +90,13 @@
           return `
                 <div class="list-group-item list-group-item-action">
                     <div class="d-flex w-100 justify-content-between">
-                        <small>${msg.author}</small>
+                        <small>${msg.author.name}</small>
                     </div>
                     <p class="mb-1">${msg.text}</p>
                 </div>
         `;
         };
 
-        const getHistory = (msg) => {
-          return `
-                <div class="list-group-item list-group-item-action">
-                    <div class="d-flex w-100 justify-content-between">
-                        <small>${msg.author}</small>
-                    </div>
-                    <p class="mb-1">${msg.text}</p>
-                </div>
-        `;
-        };
 
         socket.on('newMessage', (msg) => {
           const div = getTmp(msg);
@@ -114,9 +104,10 @@
         });
 
         socket.on('chatHistory', (msg) => {
+          boxList.innerHTML = "";
           msg.forEach((message) => {
-            boxList.innerHTML = "";
-            const div = getHistory(message);
+            console.log(message);
+            const div = getTmp(message);
             boxList.insertAdjacentHTML('beforeend', div);
           })
 
