@@ -1,7 +1,5 @@
 const {UserController} = require('../controllers/user.controller');
 const {path} = require('../user.module');
-const passport = require('passport');
-
 
 const AUTH_ROUTE = `${path}/signin`;
 
