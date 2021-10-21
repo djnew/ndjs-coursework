@@ -6,7 +6,8 @@
   "license": "MIT",
   "scripts": {
     "watch": "node_modules/.bin/nodemon -L --watch src src/index.js",
-    "lint": "node_modules/.bin/eslint --ext \\\".js\\\" --ignore-path .eslintignore ."
+    "lint": "node_modules/.bin/eslint --ext \\\".js\\\" --ignore-path .eslintignore .",
+    "start": "node src/index.js"
   },
   "dependencies": {
     "bcrypt": "^5.0.1",
