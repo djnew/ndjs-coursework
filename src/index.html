@@ -115,6 +115,7 @@
 
         socket.on('chatHistory', (msg) => {
           msg.forEach((message) => {
+            boxList.innerHTML = "";
             const div = getHistory(message);
             boxList.insertAdjacentHTML('beforeend', div);
           })

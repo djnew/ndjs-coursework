@@ -30,8 +30,8 @@ const ChatService = {
 
 
     if (chat) {
-      console.log([...chat.messages, new mongoose.mongo.ObjectId(message.id)]);
-      await ChatModel.findByIdAndUpdate(chat.id.toString(), [...chat.messages, message.id]);
+      console.log('testMessage',[...chat.messages, new mongoose.mongo.ObjectId(message.id)]);
+      await ChatModel.findByIdAndUpdate(chat.id.toString(), {messages: [...chat.messages, message.id]});
       console.log(`chat exist ${chat.id}`);
       return emitter.emit('sendToSubscribers', {chatId: chat.id.toString(), message});
     } else {
